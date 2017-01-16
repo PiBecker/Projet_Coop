@@ -1,6 +1,6 @@
 var app = angular.module("coop", ['ngResource']);
 var url_local = 'http://http://localhost/Projet_Coop/';
-app.constant('api', {'key': 'ea7303b5009143bea9c81082e12bac96', 'url': 'http://coop.api.netlor.fr/api'});
+app.constant('api', {'key': '169c3211b85b458bb411ab18a81c0f88', 'url': 'http://coop.api.netlor.fr/api'});
 
 app.service('TokenService', [function(){
 	this.token = null;
