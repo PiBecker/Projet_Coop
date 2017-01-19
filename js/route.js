@@ -1,10 +1,16 @@
-var app = angular.module("coop", ['ngRoute']);
+var app = angular.module("coop");
 
-app.config(['$routeProvider', function ($routeProvider) {
+app.config(['$routeProvider', function($routeProvider) {
+    $routeProvider.when('/', {
+            template: '',
+            controller: 'StartController'
+        })
 
-    $routeProvider.when('/signin', {
+        .when('/signin', {
+            templateUrl: './views/sign_in.html'
+        })
 
-        templateUrl: 'views/sign_in.html',
-        controller: 'SigninController'
-    });
+        .otherwise({
+            redirectTo: '/'
+        });
 }]);
