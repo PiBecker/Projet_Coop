@@ -21,7 +21,6 @@ app.config(['$routeProvider', function($routeProvider) {
       })
 
       .when('/members/signout', {
-          templateUrl: './views/members/sign_out.html',
           controller: 'SignoutController'
       })
 

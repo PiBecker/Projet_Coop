@@ -91,13 +91,13 @@ app.controller("SigninController", ['$scope', 'Member', 'TokenService', '$locati
   }
 }]);
 
-app.controller("SignoutController", ['$scope', 'TokenService', 'Member', '$location', function(scope, TokenService, Member, $location) {
+app.controller("SignoutController", ['$scope', 'TokenService', 'Member', '$location', function($scope, TokenService, Member, $location) {
     if (TokenService.getToken() !== null) {
-        $scope.logout = function() {
+        $scope.signout = function() {
             Member.signout({}, function() {
                 TokenService.deleteToken();
                 console.log('Déconnexion');
-                $location.path('/signin');
+                $location.path('/');
             });
         }
     }
