@@ -1,23 +1,42 @@
-angular
-    .module('app')
-    .config(config);
+var app = angular.module('app');
 
-function config($routeProvider) {
-    $routeProvider.when('/', {
-            templateUrl: './index.html'
-        })
+app.config(['$routeProvider', function($routeProvider) {
+  $routeProvider.when('/', {
+          template: '',
+          controller: 'HomeController'
+      })
 
-        .when('/signin', {
-            templateUrl: '../app/members/member_view.html',
-            controller: 'MemberController'
-        })
+      .when('/members', {
+          templateUrl: './views/members.html'
+      })
 
-        when('/channel/:idChannel', {
-          templateUrl: 'views/channel.html',
-          controller:'ChannelController'
-        }).
+      .when('/members/signin', {
+          templateUrl: './views/members/sign_in.html',
+          controller: 'SigninController'
+      })
 
-        .otherwise({
-            redirectTo: '/signin'
-        });
-}
+      .when('/members/signout', {
+          controller: 'SignoutController'
+      })
+
+      .when('/members/signup', {
+        templateUrl: './views/members/sign_up.html',
+        controller: 'SignupController'
+      })
+
+      .when('/channels', {
+          templateUrl: './views/channels.html'
+      })
+
+      .when('/channels/new', {
+          templateUrl: './views/channels/new.html'
+      })
+
+      .when('/channels/:id', {
+          templateUrl: './views/channels/show.html'
+      })
+
+      .otherwise({
+          redirectTo: '/'
+      });
+}]);

@@ -1,8 +1,10 @@
-var app = angular.module("app", ['ngResource', 'ngRoute', 'member']);
-var url_local = 'http://127.0.0.1/Projet_Coop/';
+var app = angular.module("app", ['ngResource', 'ngRoute']);
 
+/** CONSTANT **/
 app.constant('api', {'key': '169c3211b85b458bb411ab18a81c0f88', 'url': 'http://coop.api.netlor.fr/api'});
 
+
+/** SERVICE **/
 app.service('TokenService', [function() {
     this.token = '';
     this.setToken = function(t) {
@@ -21,7 +23,7 @@ app.service('TokenService', [function() {
     }
 }]);
 
-
+/** CONFIG **/
 app.config(['$httpProvider', 'api', function($httpProvider, api) {
     $httpProvider.defaults.headers.common.Authorization = 'Token token=' + api.key;
 
@@ -30,11 +32,96 @@ app.config(['$httpProvider', 'api', function($httpProvider, api) {
             request: function(config) {
                 var token = TokenService.getToken();
                 if (token !== null) {
-                    config.url += ((config.url.indexOf('?') >= 0) ? '&' : '?') +
-                        'token=' + token;
+                    config.url += ((config.url.indexOf('?') >= 0) ? '&' : '?') + 'token=' + token;
                 }
                 return config;
             }
         };
     }]);
+}]);
+
+/** FACTORIES **/
+app.factory("Member", ['$resource', 'api', function($resource, api) {
+    return $resource(api.url + '/members/:id', {
+        id: '@_id'
+    }, {
+        update: {
+            method: 'PUT'
+        },
+        signin: {
+            method: 'POST',
+            url: api.url + '/members/signin'
+        },
+        signout: {
+            method: 'DELETE',
+            url: api.url + '/members/signout'
+        }
+    });
+}]);
+
+/** CONTROLLERS **/
+
+app.controller("HomeController", ['$scope', 'Member', 'TokenService', '$location', function($scope, Member, TokenService, $location) {
+    if (TokenService.getToken() === null) {
+        $location.path('/members/signin');
+    } else {
+        $location.path('/');
+    }
+}]);
+
+app.controller("SigninController", ['$scope', 'Member', 'TokenService', '$location', function($scope, Member, TokenService, $location) {
+  if (TokenService.getToken() === null){
+    $scope.signin = function(){
+      $scope.member = Member.signin({
+            email: $scope.email, //cooptata@toto.fr
+            password: $scope.password, //tatayoyo
+        },
+      function(m) {
+          $scope.member = m;
+          TokenService.setToken($scope.member.token);
+          $location.path('/members');
+      },
+      function(e) {
+          console.log(e);
+      });
+    }
+  }
+  else{
+    $location.path('/members');
+  }
+}]);
+
+app.controller("SignoutController", ['$scope', 'TokenService', 'Member', '$location', function($scope, TokenService, Member, $location) {
+    if (TokenService.getToken() !== null) {
+        $scope.signout = function() {
+            Member.signout({}, function() {
+                TokenService.deleteToken();
+                console.log('Déconnexion');
+                $location.path('/');
+            });
+        }
+    }
+}]);
+
+app.controller("SignupController", ['$scope', 'TokenService', 'Member', '$location', function($scope, TokenService, Member, $location) {
+    if (TokenService.getToken() === null) {
+        $scope.signup = function() {
+            console.log('ici');
+            $scope.newMember = new Member({
+                fullname:$scope.name,
+                email: $scope.email,
+                password: $scope.password
+            });
+
+            $scope.newMember.$save(function(m) {
+                console.log('Compte créé avec succès');
+                $location.path('/members');
+            }, function(e) {
+                alert(e.data.error);
+            });
+
+        }
+    } else
+        $location.path('/');
+
 }]);
