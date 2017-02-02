@@ -12,6 +12,11 @@ function config($routeProvider) {
             controller: 'MemberController'
         })
 
+        when('/channel/:idChannel', {
+          templateUrl: 'views/channel.html',
+          controller:'ChannelController'
+        }).
+
         .otherwise({
             redirectTo: '/signin'
         });
