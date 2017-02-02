@@ -1,26 +1,28 @@
-angular
-    .module('app')
-    .config(config);
+var app = angular.module('app');
 
-function config($routeProvider) {
+app.config(['$routeProvider', function($routeProvider) {
   $routeProvider.when('/', {
-          templateUrl: './index.html',
+          template: '',
+          controller: 'HomeController'
       })
 
       .when('/members', {
           templateUrl: './views/members.html'
       })
 
-      .when('/members/signin', {
-          templateUrl: './views/members/sign_in.html'
+      .when('/members/signup', {
+        templateUrl: './views/members/sign_up.html',
+        controller: 'SignupController'
       })
 
-      .when('/members/signup', {
-          templateUrl: './views/members/sign_up.html'
+      .when('/members/signin', {
+          templateUrl: './views/members/sign_in.html',
+          controller: 'SigninController'
       })
 
       .when('/members/signout', {
-          templateUrl: './views/members/sign_out.html'
+          templateUrl: './views/members/sign_out.html',
+          controller: 'SignoutController'
       })
 
       .when('/channels', {
@@ -38,4 +40,4 @@ function config($routeProvider) {
       .otherwise({
           redirectTo: '/'
       });
-}
+}]);
