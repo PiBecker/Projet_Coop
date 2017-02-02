@@ -10,11 +10,6 @@ app.config(['$routeProvider', function($routeProvider) {
           templateUrl: './views/members.html'
       })
 
-      .when('/members/signup', {
-        templateUrl: './views/members/sign_up.html',
-        controller: 'SignupController'
-      })
-
       .when('/members/signin', {
           templateUrl: './views/members/sign_in.html',
           controller: 'SigninController'
@@ -22,6 +17,11 @@ app.config(['$routeProvider', function($routeProvider) {
 
       .when('/members/signout', {
           controller: 'SignoutController'
+      })
+
+      .when('/members/signup', {
+        templateUrl: './views/members/sign_up.html',
+        controller: 'SignupController'
       })
 
       .when('/channels', {

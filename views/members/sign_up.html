@@ -1,0 +1,28 @@
+<div ng-controller="SignupController">
+  <form class="form-horizontal" ng-submit="signup()" autocomplete="off">
+    <h3 class="text-center">S'inscrire</h3>
+    <div class="row">
+      <label for="inputName" class="col-lg-2 control-label">Nom</label>
+      <div class="col-lg-10">
+        <input id="inputName" ng-model="name" type="text" name="name" placeholder="Name">
+      </div>
+    </div>
+    <div class="row">
+      <label for="inputEmail" class="col-lg-2 control-label">Email</label>
+      <div class="col-lg-10">
+        <input id="inputEmail" ng-model="email" type="text" name="email" placeholder="E-mail address">
+      </div>
+    </div>
+    <div class="row">
+      <label for="inputPassword" class="col-lg-2 control-label">Mot de passe</label>
+      <div class="col-lg-10">
+        <input id="inputPassword" ng-model="password" type="password" name="password" placeholder="Password">
+      </div>
+    </div>
+    <input type="submit" value="S'inscrire">
+  </form>
+
+  <div class="text-center">
+    Vous avez déjà votre compte ? <a href="#!/members/signin">Se connecter</a>
+  </div>
+</div>

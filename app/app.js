@@ -102,3 +102,26 @@ app.controller("SignoutController", ['$scope', 'TokenService', 'Member', '$locat
         }
     }
 }]);
+
+app.controller("SignupController", ['$scope', 'TokenService', 'Member', '$location', function($scope, TokenService, Member, $location) {
+    if (TokenService.getToken() === null) {
+        $scope.signup = function() {
+            console.log('ici');
+            $scope.newMember = new Member({
+                fullname:$scope.name,
+                email: $scope.email,
+                password: $scope.password
+            });
+
+            $scope.newMember.$save(function(m) {
+                console.log('Compte créé avec succès');
+                $location.path('/members');
+            }, function(e) {
+                alert(e.data.error);
+            });
+
+        }
+    } else
+        $location.path('/');
+
+}]);
