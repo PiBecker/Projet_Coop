@@ -1,25 +1,23 @@
-<!DOCTYPE html>
-<html>
 
+<!DOCTYPE html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <title>Channel</title>
     <meta charset="UTF-8" />
     <script type="text/javascript" src="./lib/jquery-3.1.1.min.js"></script>
     <script type="text/javascript" src="./lib/angular.min.js"></script>
     <script type="text/javascript" src="./lib/angular-resource.min.js"></script>
     <script type="text/javascript" src="./lib/angular-route.min.js"></script>
-    <script type="text/javascript" src="./app/app.js"></script>
-    <script type="text/javascript" src="./app/route.js"></script>
     <script src="app/channel.js"></script>
     <link rel="stylesheet" href="./css/bootstrap.css" />
-    <title>Co'OP</title>
 </head>
 
-<body ng-app="app">
-  <h3 class="text-center">Projet Coop -- Angular 1 JS</h3>
-  <hr>
-  <div class="container">
-    <div ng-view></div>
-  </div>
-</body>
 
-</html>
+<body ng-controller="ChannelController">
+  <div class="">
+    <div class="" ng-click="retourMenu()" style="cursor:pointer"><i class="">Retour au Menu</i></div>
+    <div class="" ng-click="supprimerChannel()" style="cursor:pointer"><i class="">Supprimer Channel</i></div>
+    <h5>{{ channel.label }}</h5>
+    <blockquote>{{ channel.topic }}</blockquote>
+</div>

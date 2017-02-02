@@ -24,16 +24,9 @@ app.config(['$routeProvider', function($routeProvider) {
         controller: 'SignupController'
       })
 
-      .when('/channels', {
-          templateUrl: './views/channels.html'
-      })
-
-      .when('/channels/new', {
-          templateUrl: './views/channels/new.html'
-      })
-
-      .when('/channels/:id', {
-          templateUrl: './views/channels/show.html'
+      .when('/channel/:idChannel', {
+          templateUrl: ';/views/channel.html',
+          controller:'ChannelController'
       })
 
       .otherwise({

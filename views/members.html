@@ -6,6 +6,30 @@ Vous êtes connecté !
   </form>
 </div>
 
-<div class="text-center">
-  Vous n'avez pas de compte ? <a href="#!/members/signup">S'inscrire</a>
-</div>
+<ul class="collapsible popout" data-collapsible="accordion">
+        <li>
+            <div class="">Membres de l'équipe</div>
+            <div class="" ng-bind-html="memberslist"></div>
+        </li>
+        <li>
+            <div class="">Création de channels</div>
+            <div class="">
+                <h5>{{ channel.message }}</h5>
+                <form class="">
+                    <div class="input-field">
+                        <input id="label" type="text" class="validate" ng-model="channel.label" required>
+                        <label for="label">Label</label>
+                    </div>
+                    <div class="input-field">
+                        <input id="topic" type="text" class="validate" ng-model="channel.topic" required>
+                        <label for="topic">Topic</label>
+                    </div>
+                    <button class="btn"><a ng-click="creerChannel()">Créer le channel</a></button>
+                </form>
+            </div>
+        </li>
+        <li>
+            <button class="btn">Voir channels</button>
+            <div class="" ng-bind-html="channels"></div>
+        </li>
+    </ul>
