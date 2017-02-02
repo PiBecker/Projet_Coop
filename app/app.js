@@ -132,6 +132,12 @@ app.controller("SignupController", ['$scope', 'TokenService', 'Member', '$locati
 
 app.controller("MemberController", ['$scope', 'Member', 'Channel', 'TokenService', '$cookies', function($scope, Member, Channel, TokenService, $cookies) {
 
+  $scope.signin = {fullname:"", email:"", password:""};
+  $scope.login = {email:"", password:""};
+
+  $scope.channel = {label:'', topic:'', message:''};
+  $scope.logged = false;
+
 $scope.removeCookies = function(){
     $cookies.remove('id_coop');
     $cookies.remove('email_coop');
@@ -156,6 +162,21 @@ $scope.creerChannel = function(){
     )
 };
 
+$scope.connexion = function(){
+    $scope.logged = true;
+
+    // affichage membres
+    var members = Member.query({token:TokenService.getToken()}, function(){
+        var list = '<ul class="collection">';
+        members.forEach(function(n){
+            list = list + '<li class="collection-item"><h5>'+ n.fullname+'</h5>'+ n.email+'</li>';
+        });
+        $scope.memberslist = list+'</ul>';
+    });
+
+    $scope.afficherChannels();
+};
+
 
 $scope.afficherChannels = function(){
     var channels = Channel.query({token:TokenService.getToken()}, function(){
@@ -169,9 +190,9 @@ $scope.afficherChannels = function(){
 
 
     var init = function(){
-        var emailcoop = $cookies.get('emailcoop');
-        var passwordcoop = $cookies.get('passwordcoop');
-        var tokencoop = $cookies.get('tokencoop');
+        var emailcoop = $cookies.get('email_coop');
+        var passwordcoop = $cookies.get('password_coop');
+        var tokencoop = $cookies.get('token');
         if(emailcoop != undefined && passwordcoop != undefined && tokencoop != undefined){
             $('.collapsible').collapsible();
             TokenService.setToken(tokencoop);

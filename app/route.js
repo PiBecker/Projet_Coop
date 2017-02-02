@@ -7,7 +7,8 @@ app.config(['$routeProvider', function($routeProvider) {
       })
 
       .when('/members', {
-          templateUrl: './views/members.html'
+          templateUrl: './views/members.html',
+          controller: 'MemberController'
       })
 
       .when('/members/signin', {
@@ -25,7 +26,7 @@ app.config(['$routeProvider', function($routeProvider) {
       })
 
       .when('/channel/:idChannel', {
-          templateUrl: ';/views/channel.html',
+          templateUrl: ';/`views/channel.html',
           controller:'ChannelController'
       })
 
