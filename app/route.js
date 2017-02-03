@@ -26,7 +26,7 @@ app.config(['$routeProvider', function($routeProvider) {
       })
 
       .when('/channel/:idChannel', {
-          templateUrl: ';/`views/channel.html',
+          templateUrl: './views/channel.html',
           controller:'ChannelController'
       })
 

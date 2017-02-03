@@ -3,7 +3,6 @@ var app = angular.module("app", ['ngResource', 'ngRoute']);
 /** CONSTANT **/
 app.constant('api', {'key': '169c3211b85b458bb411ab18a81c0f88', 'url': 'http://coop.api.netlor.fr/api'});
 
-
 /** SERVICE **/
 app.service('TokenService', [function() {
     this.token = '';
@@ -187,7 +186,6 @@ $scope.afficherChannels = function(){
         $scope.channels = list+'</ul>';
     });
 };
-
 
     var init = function(){
         var emailcoop = $cookies.get('email_coop');
