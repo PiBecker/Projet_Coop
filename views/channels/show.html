@@ -1,0 +1,22 @@
+<div ng-controller="PostController" ng-init="refresh()">
+  <h3 class="text-center">Chatbox</h3>
+  <div class="chatbox">{{posts}}</div>
+  <br>
+  <form class="form-horizontal" ng-submit="add()" autocomplete="off">
+    <h3 class="text-center">Ajouter un post</h3>
+    <div class="row">
+      <label for="inputMessage" class="col-lg-2 control-label">Votre message</label>
+      <div class="col-lg-10">
+        <input id="inputMessage" ng-model="message" type="text" name="message" placeholder="Entrez votre message">
+      </div>
+    </div>
+    <input type="submit" value="Envoyer">
+  </form>
+</div>
+</div>
+<div class="text-center">
+  <a href="#!/members">Retour à mon espace utilisateur</a>
+</div>
+<div class="text-center">
+  <a href="#!/channels">Voir tous les channels</a>
+</div>

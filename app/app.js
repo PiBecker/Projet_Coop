@@ -1,4 +1,4 @@
-var app = angular.module("app", ['ngResource', 'ngRoute']);
+var app = angular.module("app", ['ngResource', 'ngRoute', 'ngSanitize']);
 
 /** CONSTANT **/
 app.constant('api', {'key': '169c3211b85b458bb411ab18a81c0f88', 'url': 'http://coop.api.netlor.fr/api'});
@@ -59,6 +59,27 @@ app.factory("Member", ['$resource', 'api', function($resource, api) {
     });
 }]);
 
+app.factory("Channel", ['$resource', 'api', function($resource, api) {
+    return $resource(api.url + '/channels/:id', {
+        id: '@_id'
+    }, {
+      update: {
+        method: 'PUT'
+      }
+    });
+}]);
+
+app.factory('Post', ['$resource', 'api', 'TokenService', function($resource, api){
+
+    return $resource(api.url+'/channels/:_channel_id/posts/:_post', {
+      channel_id:'@_channel_id', id:'@_post'
+    }, {
+        update: {
+          method:'PUT'
+        }
+    })
+}]);
+
 /** CONTROLLERS **/
 
 app.controller("HomeController", ['$scope', 'Member', 'TokenService', '$location', function($scope, Member, TokenService, $location) {
@@ -96,7 +117,6 @@ app.controller("SignoutController", ['$scope', 'TokenService', 'Member', '$locat
         $scope.signout = function() {
             Member.signout({}, function() {
                 TokenService.deleteToken();
-                console.log('Déconnexion');
                 $location.path('/');
             });
         }
@@ -106,7 +126,6 @@ app.controller("SignoutController", ['$scope', 'TokenService', 'Member', '$locat
 app.controller("SignupController", ['$scope', 'TokenService', 'Member', '$location', function($scope, TokenService, Member, $location) {
     if (TokenService.getToken() === null) {
         $scope.signup = function() {
-            console.log('ici');
             $scope.newMember = new Member({
                 fullname:$scope.name,
                 email: $scope.email,
@@ -117,11 +136,73 @@ app.controller("SignupController", ['$scope', 'TokenService', 'Member', '$locati
                 console.log('Compte créé avec succès');
                 $location.path('/members');
             }, function(e) {
-                alert(e.data.error);
+                console.log(e);
             });
 
         }
     } else
         $location.path('/');
 
+}]);
+
+app.controller("ChannelController", ['$scope', 'TokenService', 'Channel', '$location', function($scope, TokenService, Channel, $location) {
+  if (TokenService.getToken() !== null) {
+      $scope.new = function() {
+          $scope.newChannel = new Channel({
+              label: $scope.label,
+              topic: $scope.topic
+          });
+
+          $scope.newChannel.$save(function(m) {
+              $location.path('/channels');
+          }, function(e) {
+              console.log(e);
+          });
+      }
+      $scope.index = function(){
+        var channels = Channel.query({token:TokenService.getToken()}, function(){
+        var list = '<ul>';
+        channels.forEach(function(c){
+            list += '<li>'+ c.label+', '+ c.topic+', '+'<a href="#!/channels/'+ c._id+'">aller au channel</a></li>';
+        });
+        $scope.channels = list+'</ul>';
+    });
+};
+  } else
+      $location.path('/members/signin');
+}]);
+
+
+app.controller("PostController", ['$scope', 'TokenService', 'Channel', 'Post', '$routeParams', '$location', function($scope, TokenService, Channel, Post, $routeParams, $location) {
+  if (TokenService.getToken() !== null) {
+    $scope.add = function(){
+      console.log($routeParams.id + ', ' + $scope.message);
+      Post.save({
+              channel_id: $routeParams.id,
+              message: $scope.message
+          },
+          function(){
+              $scope.get();
+              $scope.message = '';
+          },
+          function(e){
+              console.log(e);
+          }
+      )
+    }
+
+    $scope.get = function(){
+      Post.query({
+              channel_id:$scope.channel_id
+          },
+          function(p){
+              $scope.posts = p;
+          },
+          function(e){
+              console.log(e);
+          }
+    )}
+
+  } else
+      $location.path('/members/signin');
 }]);

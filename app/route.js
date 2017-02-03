@@ -28,12 +28,9 @@ app.config(['$routeProvider', function($routeProvider) {
           templateUrl: './views/channels.html'
       })
 
-      .when('/channels/new', {
-          templateUrl: './views/channels/new.html'
-      })
-
       .when('/channels/:id', {
-          templateUrl: './views/channels/show.html'
+          templateUrl: './views/channels/show.html',
+          controller: 'ChannelController'
       })
 
       .otherwise({

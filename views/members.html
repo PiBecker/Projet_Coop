@@ -1,4 +1,4 @@
-Vous êtes connecté !
+<h3>Vous êtes connecté !</h3>
 
 <div ng-controller="SignoutController">
   <form ng-submit="signout()">
@@ -6,6 +6,27 @@ Vous êtes connecté !
   </form>
 </div>
 
+<hr>
+<h3>Création de channel</h3>
+<div ng-controller="ChannelController">
+  <form class="form-horizontal" ng-submit="new()" autocomplete="off">
+    <h4 class="text-center">Saisir les informations pour créer votre channel</h4>
+    <div class="row">
+      <label for="inputLabel" class="col-lg-2 control-label">Label</label>
+      <div class="col-lg-10">
+        <input id="inputLabel" ng-model="label" type="text" name="label" placeholder="Label">
+      </div>
+    </div>
+    <div class="row">
+      <label for="inputTopic" class="col-lg-2 control-label">Topic</label>
+      <div class="col-lg-10">
+        <input id="inputTopic" ng-model="topic" type="text" name="topic" placeholder="Topic">
+      </div>
+    </div>
+    <input type="submit" value="Créer mon channel">
+  </form>
+</div>
+
 <div class="text-center">
-  Vous n'avez pas de compte ? <a href="#!/members/signup">S'inscrire</a>
+  <a href="#!/channels">Voir tous les channels</a>
 </div>
